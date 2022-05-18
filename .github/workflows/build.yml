@@ -53,7 +53,10 @@ jobs:
             mingw-w64-x86_64-go
 
       - name: Print environment
-        run: env
+        run: |
+          env
+          ls -lah /mingw64
+          exit 1
 
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
