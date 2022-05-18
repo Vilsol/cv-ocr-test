@@ -29,7 +29,15 @@ jobs:
         run: sudo apt -y install tesseract-ocr libtesseract-dev
 
       - name: Test
-        run: go run .
+        run: |
+          go run .
+          go build -o test .
+
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: linux
+          path: test
 
   windows:
     name: Build (Windows)
@@ -94,9 +102,10 @@ jobs:
           export PATH=$PATH:/d/a/_temp/msys64/mingw64/bin
           export PATH=$PATH:/d/a/_temp/msys64/mingw64/include
           go run .
+          go build -o test.exe .
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        if: always()
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v3
         with:
-          limit-access-to-actor: true
+          name: windows
+          path: test.exe
