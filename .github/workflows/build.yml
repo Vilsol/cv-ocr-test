@@ -22,10 +22,10 @@ jobs:
         run: go get -u -d gocv.io/x/gocv
 
       - name: Install OpenCV
-        run: cd $GOPATH/src/gocv.io/x/gocv && make install
+        run: cd $(go env GOPATH)/src/gocv.io/x/gocv && make install
 
       - name: Test GoCV
-        run: cd $GOPATH/src/gocv.io/x/gocv && go run ./cmd/version/main.go
+        run: cd $(go env GOPATH)/src/gocv.io/x/gocv && go run ./cmd/version/main.go
 
       - name: Install Tesseract
         run: sudo apt -y install tesseract-ocr libtesseract-dev
