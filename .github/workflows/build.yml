@@ -54,6 +54,7 @@ jobs:
 
       - name: Print environment
         run: |
+          export PATH=$PATH:/mingw64/include
           env
           ls -lah /mingw64
           exit 1
