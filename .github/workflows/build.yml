@@ -42,12 +42,13 @@ jobs:
           msystem: mingw64
           update: true
           install: >-
+            git
+            cmake
             base-devel
             mingw-w64-x86_64-toolchain
             mingw-w64-x86_64-tesseract-ocr
             mingw-w64-x86_64-tesseract-data-eng
             mingw-w64-x86_64-leptonica
-            mingw-w64-x86_64-cmake
 
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
