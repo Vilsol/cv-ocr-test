@@ -15,17 +15,14 @@ jobs:
         with:
           go-version: 1.18
 
-      - name: Install GoCV
-        run: go get -u -d gocv.io/x/gocv
-
-      - name: Print gopath
-        run: cd $(go env GOPATH) && ls -R
+      - name: Clone GoCV
+        run: git clone https://github.com/hybridgroup/gocv.git
 
       - name: Install OpenCV
-        run: cd $(go env GOPATH)/src/gocv.io/x/gocv && make install
+        run: cd gocv && make install
 
       - name: Test GoCV
-        run: cd $(go env GOPATH)/src/gocv.io/x/gocv && go run ./cmd/version/main.go
+        run: cd gocv && go run ./cmd/version/main.go
 
       - name: Install Tesseract
         run: sudo apt -y install tesseract-ocr libtesseract-dev
