@@ -70,7 +70,7 @@ jobs:
         run: git clone https://github.com/hybridgroup/gocv.git
 
       - name: Make fake path
-        run: mkdir C:/src/gocv.io/x/gocv
+        run: mkdir D:/src/gocv.io/x/gocv
 
       - name: Cache OpenCV
         id: cache-opencv
@@ -83,7 +83,7 @@ jobs:
         if: steps.cache-opencv.outputs.cache-hit != 'true'
         run: cd gocv && ./win_build_opencv.cmd
         env:
-          GOPATH: "C:"
+          GOPATH: "D:"
 
       - name: Test GoCV
         run: cd gocv && go run ./cmd/version/main.go
