@@ -74,12 +74,12 @@ jobs:
         env:
           GOPATH: "C:"
 
-      - name: Test GoCV
-        run: |
-          export PATH=$PATH:/mingw64/include
-          cd gocv && go run ./cmd/version/main.go
-
-      - name: Test
-        run: |
-          export PATH=$PATH:/mingw64/include
-          go run .
+#      - name: Test GoCV
+#        run: |
+#          export PATH=$PATH:/mingw64/include
+#          cd gocv && go run ./cmd/version/main.go
+#
+#      - name: Test
+#        run: |
+#          export PATH=$PATH:/mingw64/include
+#          go run .
