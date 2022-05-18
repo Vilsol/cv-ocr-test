@@ -29,3 +29,42 @@ jobs:
 
       - name: Test
         run: go run .
+
+  windows:
+    name: Build (Windows)
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: mingw64
+          update: true
+          install: >-
+            base-devel
+            mingw-w64-x86_64-toolchain
+            mingw-w64-x86_64-tesseract-ocr
+            mingw-w64-x86_64-tesseract-data-eng
+            mingw-w64-x86_64-leptonica
+            mingw-w64-cmake
+
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.18
+
+      - name: Clone GoCV
+        run: git clone https://github.com/hybridgroup/gocv.git
+
+      - name: Install OpenCV
+        run: cd gocv && win_build_opencv.cmd
+
+      - name: Test GoCV
+        run: cd gocv && go run ./cmd/version/main.go
+
+      - name: Test
+        run: go run .
