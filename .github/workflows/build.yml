@@ -62,7 +62,7 @@ jobs:
         run: git clone https://github.com/hybridgroup/gocv.git
 
       - name: Install OpenCV
-        run: cd gocv && win_build_opencv.cmd
+        run: cd gocv && ./win_build_opencv.cmd
 
       - name: Test GoCV
         run: cd gocv && go run ./cmd/version/main.go
