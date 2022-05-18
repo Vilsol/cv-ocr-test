@@ -75,15 +75,25 @@ jobs:
 
       - name: Test GoCV
         run: |
+          export TESSDATA_PREFIX=/d/a/_temp/msys64/mingw64/share/tessdata
+          export PATH=/usr/bin
+          export PATH=$PATH:/bin
+          export PATH=$PATH:/d/a/_temp/setup-msys2
           export PATH=$PATH:/c/opencv/build/bin
-          export PATH=$PATH:/d/a/_temp/msys/msys64/mingw64/bin
-          export PATH=$PATH:/d/a/_temp/msys/msys64/mingw64/include
+          export PATH=$PATH:/d/a/_temp/msys64/mingw64/bin
+          export PATH=$PATH:/d/a/_temp/msys64/mingw64/include
           cd gocv && go run ./cmd/version/main.go
 
-#      - name: Test
-#        run: |
-#          export PATH=$PATH:/mingw64/include
-#          go run .
+      - name: Test
+        run: |
+          export TESSDATA_PREFIX=/d/a/_temp/msys64/mingw64/share/tessdata
+          export PATH=/usr/bin
+          export PATH=$PATH:/bin
+          export PATH=$PATH:/d/a/_temp/setup-msys2
+          export PATH=$PATH:/c/opencv/build/bin
+          export PATH=$PATH:/d/a/_temp/msys64/mingw64/bin
+          export PATH=$PATH:/d/a/_temp/msys64/mingw64/include
+          go run .
 
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
