@@ -73,11 +73,13 @@ jobs:
         env:
           GOPATH: "C:"
 
-#      - name: Test GoCV
-#        run: |
-#          export PATH=$PATH:/mingw64/include
-#          cd gocv && go run ./cmd/version/main.go
-#
+      - name: Test GoCV
+        run: |
+          export PATH=$PATH:/c/opencv/build/bin
+          export PATH=$PATH:/d/a/_temp/msys/msys64/mingw64/bin
+          export PATH=$PATH:/d/a/_temp/msys/msys64/mingw64/include
+          cd gocv && go run ./cmd/version/main.go
+
 #      - name: Test
 #        run: |
 #          export PATH=$PATH:/mingw64/include
@@ -85,5 +87,6 @@ jobs:
 
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
+        if: always()
         with:
           limit-access-to-actor: true
