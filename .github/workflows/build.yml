@@ -18,13 +18,6 @@ jobs:
       - name: Clone GoCV
         run: git clone https://github.com/hybridgroup/gocv.git
 
-      - name: Cache OpenCV
-        id: cache-opencv
-        uses: actions/cache@v3
-        with:
-          path: C:/opencv
-          key: ${{ runner.os }}-opencv
-
       - name: Install OpenCV
         if: steps.cache-opencv.outputs.cache-hit != 'true'
         run: cd gocv && make install
@@ -70,7 +63,7 @@ jobs:
         run: git clone https://github.com/hybridgroup/gocv.git
 
       - name: Make fake path
-        run: mkdir D:/src/gocv.io/x/gocv
+        run: mkdir -p C:/src/gocv.io/x/gocv
 
       - name: Cache OpenCV
         id: cache-opencv
@@ -83,7 +76,7 @@ jobs:
         if: steps.cache-opencv.outputs.cache-hit != 'true'
         run: cd gocv && ./win_build_opencv.cmd
         env:
-          GOPATH: "D:"
+          GOPATH: "C:"
 
       - name: Test GoCV
         run: cd gocv && go run ./cmd/version/main.go
