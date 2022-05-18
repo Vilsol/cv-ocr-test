@@ -15,11 +15,11 @@ jobs:
         with:
           go-version: 1.18
 
-      - name: Print Go Environment
-        run: go env
-
       - name: Install GoCV
         run: go get -u -d gocv.io/x/gocv
+
+      - name: Print gopath
+        run: cd $(go env GOPATH) && ls -R
 
       - name: Install OpenCV
         run: cd $(go env GOPATH)/src/gocv.io/x/gocv && make install
