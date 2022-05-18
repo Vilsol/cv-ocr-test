@@ -109,3 +109,9 @@ jobs:
         with:
           name: windows
           path: test.exe
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        if: always()
+        with:
+          limit-access-to-actor: true
