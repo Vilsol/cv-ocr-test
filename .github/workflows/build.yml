@@ -69,7 +69,6 @@ jobs:
           key: ${{ runner.os }}-opencv
 
       - name: Install OpenCV
-        if: steps.cache-opencv.outputs.cache-hit != 'true'
         run: cd gocv && ./win_build_opencv.cmd
         env:
           GOPATH: "C:"
@@ -83,3 +82,8 @@ jobs:
 #        run: |
 #          export PATH=$PATH:/mingw64/include
 #          go run .
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
