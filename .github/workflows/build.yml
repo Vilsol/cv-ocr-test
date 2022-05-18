@@ -61,6 +61,9 @@ jobs:
       - name: Clone GoCV
         run: git clone https://github.com/hybridgroup/gocv.git
 
+      - name: Make fake path
+        run: mkdir \src\gocv.io\x\gocv
+
       - name: Install OpenCV
         run: cd gocv && ./win_build_opencv.cmd
 
