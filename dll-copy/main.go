@@ -32,7 +32,8 @@ func main() {
 	for _, match := range matches {
 		println("Found match:", string(match[0]))
 		for _, p := range pathSplit {
-			if strings.HasPrefix(string(match[2]), p) {
+			clean := strings.Replace(p, "\\", "/", -1)
+			if strings.HasPrefix(string(match[2]), clean) {
 				println("Copying", string(match[1]), string(match[2]))
 				if _, err := copyFile(string(match[2]), string(match[1])); err != nil {
 					panic(err)
