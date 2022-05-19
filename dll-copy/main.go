@@ -6,11 +6,13 @@ import (
 	"io"
 	"os"
 	"os/exec"
+	"path"
 	"regexp"
 	"strings"
 )
 
 var lineRegex = regexp.MustCompile(`(?m)^\s+(.+?)\s=>\s(.+?)\s\(`)
+var diskRegex = regexp.MustCompile(`^(\w):`)
 
 func main() {
 	flag.Parse()
@@ -24,16 +26,23 @@ func main() {
 	pathEnv := os.Getenv("PATH")
 	pathSplit := strings.Split(pathEnv, ";")
 
-	for _, p := range pathSplit {
-		println("PATH:", p)
+	cleanPath := make([]string, len(pathSplit))
+	for i, p := range pathSplit {
+		clean := strings.Replace(p, "\\", "/", -1)
+		diskMatch := diskRegex.FindAllStringSubmatch(p, -1)
+		if len(diskMatch) > 0 {
+			clean = path.Join(diskMatch[0][1], clean)
+		}
+
+		println("PATH:", clean)
+		cleanPath[i] = clean
 	}
 
 	matches := lineRegex.FindAllSubmatch(stdout, -1)
 	for _, match := range matches {
 		println("Found match:", string(match[0]))
-		for _, p := range pathSplit {
-			clean := strings.Replace(p, "\\", "/", -1)
-			if strings.HasPrefix(string(match[2]), clean) {
+		for _, p := range cleanPath {
+			if strings.HasPrefix(string(match[2]), p) {
 				println("Copying", string(match[1]), string(match[2]))
 				if _, err := copyFile(string(match[2]), string(match[1])); err != nil {
 					panic(err)
