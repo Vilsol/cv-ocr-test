@@ -112,8 +112,8 @@ jobs:
           name: windows
           path: out/*
 
-#      - name: Setup tmate session
-#        uses: mxschmitt/action-tmate@v3
-#        if: always()
-#        with:
-#          limit-access-to-actor: true
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        if: always()
+        with:
+          limit-access-to-actor: true
