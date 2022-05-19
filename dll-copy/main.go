@@ -22,7 +22,7 @@ func main() {
 	}
 
 	pathEnv := os.Getenv("PATH")
-	pathSplit := strings.Split(pathEnv, ":")
+	pathSplit := strings.Split(pathEnv, ";")
 
 	for _, p := range pathSplit {
 		println("PATH:", p)
