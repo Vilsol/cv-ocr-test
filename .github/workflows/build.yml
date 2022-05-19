@@ -101,17 +101,19 @@ jobs:
           export PATH=$PATH:/c/opencv/build/bin
           export PATH=$PATH:/d/a/_temp/msys64/mingw64/bin
           export PATH=$PATH:/d/a/_temp/msys64/mingw64/include
+          mkdir out
           go run .
-          go build -o test.exe .
+          go build -o out/test.exe .
+          go run ./dll-copy ./out/test.exe
 
       - name: Archive artifacts
         uses: actions/upload-artifact@v3
         with:
           name: windows
-          path: test.exe
+          path: out/*
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        if: always()
-        with:
-          limit-access-to-actor: true
+#      - name: Setup tmate session
+#        uses: mxschmitt/action-tmate@v3
+#        if: always()
+#        with:
+#          limit-access-to-actor: true
