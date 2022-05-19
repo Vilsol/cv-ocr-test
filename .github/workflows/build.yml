@@ -3,41 +3,41 @@ name: build
 on: push
 
 jobs:
-  linux:
-    name: Build (Linux)
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Check out code into the Go module directory
-        uses: actions/checkout@v2
-
-      - name: Set up Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: 1.18
-
-      - name: Clone GoCV
-        run: git clone https://github.com/hybridgroup/gocv.git
-
-      - name: Install OpenCV
-        if: steps.cache-opencv.outputs.cache-hit != 'true'
-        run: cd gocv && make install
-
-      - name: Test GoCV
-        run: cd gocv && go run ./cmd/version/main.go
-
-      - name: Install Tesseract
-        run: sudo apt -y install tesseract-ocr libtesseract-dev
-
-      - name: Test
-        run: |
-          go run .
-          go build -o test .
-
-      - name: Archive artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: linux
-          path: test
+#  linux:
+#    name: Build (Linux)
+#    runs-on: ubuntu-20.04
+#    steps:
+#      - name: Check out code into the Go module directory
+#        uses: actions/checkout@v2
+#
+#      - name: Set up Go
+#        uses: actions/setup-go@v3
+#        with:
+#          go-version: 1.18
+#
+#      - name: Clone GoCV
+#        run: git clone https://github.com/hybridgroup/gocv.git
+#
+#      - name: Install OpenCV
+#        if: steps.cache-opencv.outputs.cache-hit != 'true'
+#        run: cd gocv && make install
+#
+#      - name: Test GoCV
+#        run: cd gocv && go run ./cmd/version/main.go
+#
+#      - name: Install Tesseract
+#        run: sudo apt -y install tesseract-ocr libtesseract-dev
+#
+#      - name: Test
+#        run: |
+#          go run .
+#          go build -o test .
+#
+#      - name: Archive artifacts
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: linux
+#          path: test
 
   windows:
     name: Build (Windows)
