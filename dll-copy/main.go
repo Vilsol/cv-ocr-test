@@ -24,11 +24,16 @@ func main() {
 	pathEnv := os.Getenv("PATH")
 	pathSplit := strings.Split(pathEnv, ":")
 
+	for _, p := range pathSplit {
+		println("PATH:", p)
+	}
+
 	matches := lineRegex.FindAllSubmatch(stdout, -1)
 	for _, match := range matches {
+		println("Found match:", string(match[0]))
 		for _, p := range pathSplit {
 			if strings.HasPrefix(string(match[2]), p) {
-				println("copying", string(match[1]), string(match[2]))
+				println("Copying", string(match[1]), string(match[2]))
 				if _, err := copyFile(string(match[2]), string(match[1])); err != nil {
 					panic(err)
 				}
