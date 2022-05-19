@@ -6,6 +6,7 @@ import (
 	"io"
 	"os"
 	"os/exec"
+	"path"
 	"regexp"
 	"strings"
 )
@@ -38,13 +39,20 @@ func main() {
 		cleanPath[i] = clean
 	}
 
+	wd, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+
 	matches := lineRegex.FindAllSubmatch(stdout, -1)
 	for _, match := range matches {
 		println("Found match:", string(match[0]))
 		for _, p := range cleanPath {
 			if strings.HasPrefix(string(match[2]), p) {
-				println("Copying", string(match[1]), string(match[2]))
-				if _, err := copyFile(string(match[2]), string(match[1])); err != nil {
+				src := string(match[2])
+				dst := path.Join(wd, "out", string(match[1]))
+				println("Copying", src, "=>", dst)
+				if _, err := copyFile(src, dst); err != nil {
 					panic(err)
 				}
 			}
