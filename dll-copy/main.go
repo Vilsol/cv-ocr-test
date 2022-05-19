@@ -6,7 +6,6 @@ import (
 	"io"
 	"os"
 	"os/exec"
-	"path"
 	"regexp"
 	"strings"
 )
@@ -31,8 +30,9 @@ func main() {
 		clean := strings.Replace(p, "\\", "/", -1)
 		diskMatch := diskRegex.FindAllStringSubmatch(p, -1)
 		if len(diskMatch) > 0 {
-			clean = path.Join(diskMatch[0][1], clean)
+			clean = "/" + diskMatch[0][1] + clean[2:]
 		}
+		clean = strings.ToLower(clean)
 
 		println("PATH:", clean)
 		cleanPath[i] = clean
