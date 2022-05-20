@@ -83,7 +83,6 @@ jobs:
 
       - name: Test GoCV
         run: |
-          export TESSDATA_PREFIX=/d/a/_temp/msys64/mingw64/share/tessdata
           export PATH=/usr/bin
           export PATH=$PATH:/bin
           export PATH=$PATH:/d/a/_temp/setup-msys2
@@ -94,7 +93,16 @@ jobs:
 
       - name: Test
         run: |
-          export TESSDATA_PREFIX=/d/a/_temp/msys64/mingw64/share/tessdata
+          export PATH=/usr/bin
+          export PATH=$PATH:/bin
+          export PATH=$PATH:/d/a/_temp/setup-msys2
+          export PATH=$PATH:/c/opencv/build/bin
+          export PATH=$PATH:/d/a/_temp/msys64/mingw64/bin
+          export PATH=$PATH:/d/a/_temp/msys64/mingw64/include
+          go run .
+
+      - name: Prepare Artifacts
+        run: |
           export PATH=/usr/bin
           export PATH=$PATH:/bin
           export PATH=$PATH:/d/a/_temp/setup-msys2
@@ -102,9 +110,9 @@ jobs:
           export PATH=$PATH:/d/a/_temp/msys64/mingw64/bin
           export PATH=$PATH:/d/a/_temp/msys64/mingw64/include
           mkdir out
-          go run .
           go build -o out/test.exe .
           go run ./dll-copy ./out/test.exe
+          cp eng.traineddata out/
 
       - name: Archive artifacts
         uses: actions/upload-artifact@v3
@@ -112,8 +120,8 @@ jobs:
           name: windows
           path: out/*
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        if: always()
-        with:
-          limit-access-to-actor: true
+#      - name: Setup tmate session
+#        uses: mxschmitt/action-tmate@v3
+#        if: always()
+#        with:
+#          limit-access-to-actor: true

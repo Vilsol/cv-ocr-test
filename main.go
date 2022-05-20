@@ -8,16 +8,28 @@ import (
 	"gocv.io/x/gocv"
 	"image"
 	"image/png"
+	"os"
 )
 
 //go:embed ocr-sample.png
 var SamplePNG []byte
 
 func main() {
+	wd, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+
 	client := gosseract.NewClient()
+
 	if err := client.SetLanguage("eng"); err != nil {
 		panic(err)
 	}
+
+	if err := client.SetTessdataPrefix(wd); err != nil {
+		panic(err)
+	}
+
 	println("Tesseract Version", client.Version())
 
 	img, err := png.Decode(bytes.NewReader(SamplePNG))
