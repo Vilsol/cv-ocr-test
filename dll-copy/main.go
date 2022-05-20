@@ -50,6 +50,7 @@ func main() {
 		for _, p := range cleanPath {
 			if strings.HasPrefix(string(match[2]), p) {
 				src := string(match[2])
+				src = src[1:2] + ":" + src[2:]
 				dst := path.Join(wd, "out", string(match[1]))
 				println("Copying", src, "=>", dst)
 				if _, err := copyFile(src, dst); err != nil {
